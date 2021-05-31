@@ -131,3 +131,7 @@ dmypy.json
 
 # aplication mirations
 *migrations/
+
+# PyCharm
+.idea/
+
