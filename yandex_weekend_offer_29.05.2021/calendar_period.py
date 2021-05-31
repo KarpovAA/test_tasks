@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# Модуль разбиения на интервалы дат
 
 import sys
 import calendar
@@ -45,6 +46,20 @@ def get_latest_date_of_period(period: str, start_date: dt.datetime) -> [dt.datet
     return None
 
 
+def split_date_intervals(period: str, start: dt.datetime, end: dt.datetime) -> [int, list]:
+    start_date = start
+    n_period = 0
+    list_periods = []
+    while start_date < end:
+        n_period += 1
+        end_date = get_latest_date_of_period(period, start_date)
+        if end_date > end:
+            end_date = end
+        list_periods.append([str(start_date.date()), str(end_date.date())])
+        start_date = end_date + dt.timedelta(days=1)
+    return n_period, list_periods
+
+
 def parse_input():
     period = sys.stdin.readline().strip()
     start_period, end_period = sys.stdin.readline().strip().split(' ')
@@ -53,7 +68,10 @@ def parse_input():
 
 def main():
     period, start_period, end_period = parse_input()
-    print('Окончание периода: ', str(get_latest_date_of_period(period, start_period).date()))
+    n_period, list_periods = split_date_intervals(period, start_period, end_period)
+    print(n_period)
+    for i in list_periods:
+        print(i[0], i[1])
 
 
 if __name__ == "__main__":
@@ -61,4 +79,3 @@ if __name__ == "__main__":
         main()
     except KeyboardInterrupt:
         print('Execution is interrupted by pressing Control+C')
-
