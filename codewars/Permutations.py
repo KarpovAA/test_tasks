@@ -7,6 +7,9 @@
 # permutations('ab'); # ['ab', 'ba']
 # permutations('aabb'); # ['aabb', 'abab', 'abba', 'baab', 'baba', 'bbaa']
 
+import itertools
+
 
 def permutations(string):
-    print(string)
+    permut = itertools.permutations(string)
+    return sorted({''.join(v) for v in permut})
